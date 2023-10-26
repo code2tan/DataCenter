@@ -9,6 +9,6 @@ package com.datacenter.github.records;
  * @param pullRequests 拉取请求数
  * @param discussions  讨论数
  */
-public record ContainerHeader(String name, String fork, String stars, String issues, String pullRequests,
-                              String discussions) {
+public record ContainerHeader(String name, Integer fork, Integer stars, Integer issues, Integer pullRequests,
+                              Integer discussions) {
 }

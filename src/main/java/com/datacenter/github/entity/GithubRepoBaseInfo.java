@@ -1,9 +1,13 @@
 package com.datacenter.github.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,16 +19,20 @@ import java.util.Date;
  */
 @TableName(value ="github_repo_base_info")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class GithubRepoBaseInfo implements Serializable {
     /**
      * 
      */
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**
      * github repo id
      */
+    @TableField
     private Integer githubRepoId;
 
     /**
@@ -86,4 +94,6 @@ public class GithubRepoBaseInfo implements Serializable {
      * 更新时间
      */
     private Date updateTime;
+
+    private Integer isDelete;
 }
