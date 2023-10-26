@@ -1,6 +1,6 @@
 package com.datacenter.spider;
 
-import com.datacenter.spider.github.GithubSpider;
+import com.datacenter.github.spider.GithubSpider;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

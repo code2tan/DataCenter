@@ -1,4 +1,4 @@
-package com.datacenter.spider.github.records;
+package com.datacenter.github.records;
 
 /**
  * @param about         简介

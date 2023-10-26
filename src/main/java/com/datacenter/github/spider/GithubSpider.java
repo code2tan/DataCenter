@@ -1,8 +1,8 @@
-package com.datacenter.spider.github;
+package com.datacenter.github.spider;
 
 import com.datacenter.Connecter;
-import com.datacenter.spider.github.records.ContainerHeader;
-import com.datacenter.spider.github.records.LayoutSidebar;
+import com.datacenter.github.records.ContainerHeader;
+import com.datacenter.github.records.LayoutSidebar;
 import com.google.gson.Gson;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;

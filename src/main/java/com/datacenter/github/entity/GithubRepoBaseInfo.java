@@ -1,4 +1,4 @@
-package com.datacenter.spider.github.entity;
+package com.datacenter.github.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,8 +9,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 
- * @TableName github_repo_base_info
+ * @author code2tan
+ * Date: [2023/10/27 4:24]
+ * Description: github_repo_base_info table
  */
 @TableName(value ="github_repo_base_info")
 @Data
