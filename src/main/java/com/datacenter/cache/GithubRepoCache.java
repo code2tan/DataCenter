@@ -20,9 +20,9 @@ public class GithubRepoCache implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        IPage<GithubRepo> page = new Page<>(0, 50);
+        IPage<GithubRepo> page = new Page<>(1, 50);
         loadData(page);
-        for (long i = 1; i <= page.getPages(); i++) {
+        for (long i = 2; i <= page.getPages(); i++) {
             page.setCurrent(i);
             loadData(page);
         }
