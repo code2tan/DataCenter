@@ -24,7 +24,7 @@ public class RepoBaseInfoSpider {
     private final ExecutorService pool;
 
     public RepoBaseInfoSpider() {
-        pool = ThreadPoolsUtil.getOrInitExecutors("GITHUB_REPO_SPIDER", 8);
+        pool = ThreadPoolsUtil.getOrInitExecutors("GITHUB_REPO_SPIDER", 4);
     }
 
     public void start() {
@@ -52,13 +52,20 @@ public class RepoBaseInfoSpider {
         try {
             List<Future<GithubRepoBaseInfo>> futures = pool.invokeAll(repoBaseInfoSpiderTaskList);
             for (Future<GithubRepoBaseInfo> future : futures) {
-                GithubRepoBaseInfo result = future.get(10, TimeUnit.SECONDS);
-                result.setId(githubRepoId2GithubRepoBaseInfoId.getOrDefault(result.getGithubRepoId(), null));
-                resultList.add(result);
+                try {
+                    GithubRepoBaseInfo result = future.get(10, TimeUnit.SECONDS);
+                    if (Objects.isNull(result)) {
+                        continue;
+                    }
+                    result.setId(githubRepoId2GithubRepoBaseInfoId.getOrDefault(result.getGithubRepoId(), null));
+                    resultList.add(result);
+                } catch (TimeoutException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
             githubRepoBaseInfoService.saveOrUpdateBatch(resultList);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }

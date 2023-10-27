@@ -25,8 +25,6 @@ import java.util.List;
 @Component
 public class RepoTrendingSpider {
     @Resource
-    Connector connector;
-    @Resource
     GithubRepoCache githubRepoCache;
     @Resource
     GithubRepoService githubRepoService;
@@ -36,7 +34,7 @@ public class RepoTrendingSpider {
         String trendingRrl = "https://github.com/trending";
         Document document = null;
         try {
-            document = connector.getConnect(trendingRrl).get();
+            document = Connector.getConnect(trendingRrl).get();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

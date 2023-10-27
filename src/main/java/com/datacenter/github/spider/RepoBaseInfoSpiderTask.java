@@ -1,14 +1,14 @@
 package com.datacenter.github.spider;
 
-import com.datacenter.utils.Connector;
 import com.datacenter.github.entity.GithubRepo;
 import com.datacenter.github.entity.GithubRepoBaseInfo;
 import com.datacenter.github.records.ContainerHeader;
 import com.datacenter.github.records.LayoutSidebar;
+import com.datacenter.utils.Connector;
 import com.google.gson.Gson;
 import jakarta.annotation.Nonnull;
-import jakarta.annotation.Resource;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -18,15 +18,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 
+@Slf4j
 @Data
 public class RepoBaseInfoSpiderTask implements Callable<GithubRepoBaseInfo> {
     private static final Gson gson = new Gson();
-    @Resource
-    Connector connector;
 
     private GithubRepo githubRepo;
-
-    private GithubRepoBaseInfo result;
 
     public RepoBaseInfoSpiderTask(GithubRepo githubRepo) {
         this.githubRepo = githubRepo;
@@ -53,8 +50,18 @@ public class RepoBaseInfoSpiderTask implements Callable<GithubRepoBaseInfo> {
      *
      * @throws IOException e
      */
-    public GithubRepoBaseInfo dataParse(GithubRepo githubRepo) throws IOException {
-        Document doc = connector.getConnect(githubRepo.getUrl()).get();
+
+    public GithubRepoBaseInfo dataParse(GithubRepo githubRepo) {
+        if (githubRepo.getUrl().isBlank()) {
+            return null;
+        }
+        Document doc = null;
+        try {
+            doc = Connector.getConnect(githubRepo.getUrl()).get();
+        } catch (IOException e) {
+            log.info(String.format("连接目标链接异常：%s", e.getMessage()));
+            return null;
+        }
         if (doc.isBlock()) {
             return null;
         }
@@ -131,6 +138,5 @@ public class RepoBaseInfoSpiderTask implements Callable<GithubRepoBaseInfo> {
         String languagesJson = gson.toJson(languages);
         return new LayoutSidebar(about, website, languagesJson);
     }
-
 
 }
