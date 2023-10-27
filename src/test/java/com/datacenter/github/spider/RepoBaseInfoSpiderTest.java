@@ -13,19 +13,14 @@ import java.util.Date;
 @SpringBootTest
 class RepoBaseInfoSpiderTest {
     @Resource
-    RepoBaseInfoSpider repoBaseInfoSpider;
-
-    @Test
-    void start() {
-        repoBaseInfoSpider.start();
-    }
+    RepoBaseInfoSpiderTask repoBaseInfoSpiderTask;
 
     @Test
     void getData() {
         String url = "https://github.com/apache/kafka";
         GithubRepo githubRepo = new GithubRepo(1, url, 1, new Date(), new Date(), 0);
         try {
-            GithubRepoBaseInfo data = repoBaseInfoSpider.getData(githubRepo);
+            GithubRepoBaseInfo data = repoBaseInfoSpiderTask.dataParse(githubRepo);
             System.out.println(data);
         } catch (IOException e) {
             throw new RuntimeException(e);

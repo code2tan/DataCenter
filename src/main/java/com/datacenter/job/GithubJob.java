@@ -15,14 +15,14 @@ public class GithubJob {
     @Resource
     RepoTrendingSpider repoTrendingSpider;
 
-    @Scheduled(cron = "0 0 0/12 * * ?")
+    @Scheduled(cron = "0 0 1 ? * ?")
     public void repoSpiderRun() {
         log.info("start github spider =====>");
         repoBaseInfoSpider.start();
         log.info("end github spider =====>");
     }
 
-    @Scheduled(cron = "0 0 0 0/1 * ?")
+    @Scheduled(cron = "0 0/1 1 * * 1-2 ")
     public void trendingSpiderRun() {
         log.info("start trending github spider =====>");
         repoTrendingSpider.start();

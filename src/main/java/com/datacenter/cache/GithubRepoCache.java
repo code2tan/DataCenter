@@ -20,7 +20,7 @@ public class GithubRepoCache implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        IPage<GithubRepo> page = new Page<>(0, 2);
+        IPage<GithubRepo> page = new Page<>(0, 50);
         loadData(page);
         for (long i = 1; i <= page.getPages(); i++) {
             page.setCurrent(i);

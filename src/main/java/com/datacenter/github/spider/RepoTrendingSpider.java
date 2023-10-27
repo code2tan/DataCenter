@@ -1,6 +1,6 @@
 package com.datacenter.github.spider;
 
-import com.datacenter.Connecter;
+import com.datacenter.Connector;
 import com.datacenter.cache.GithubRepoCache;
 import com.datacenter.github.entity.GithubRepo;
 import com.datacenter.github.service.GithubRepoService;
@@ -25,7 +25,7 @@ import java.util.List;
 @Component
 public class RepoTrendingSpider {
     @Resource
-    Connecter connecter;
+    Connector connector;
     @Resource
     GithubRepoCache githubRepoCache;
     @Resource
@@ -36,7 +36,7 @@ public class RepoTrendingSpider {
         String trendingRrl = "https://github.com/trending";
         Document document = null;
         try {
-            document = connecter.getConnect(trendingRrl).get();
+            document = connector.getConnect(trendingRrl).get();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
