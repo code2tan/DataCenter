@@ -47,10 +47,7 @@ public class RepoBaseInfoSpiderTask implements Callable<GithubRepoBaseInfo> {
      *
      * @param githubRepo GithubRepoCache
      * @return GithubRepoBaseInfo
-     *
-     * @throws IOException e
      */
-
     public GithubRepoBaseInfo dataParse(GithubRepo githubRepo) {
         if (githubRepo.getUrl().isBlank()) {
             return null;
