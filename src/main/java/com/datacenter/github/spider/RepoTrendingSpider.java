@@ -1,6 +1,6 @@
 package com.datacenter.github.spider;
 
-import com.datacenter.Connector;
+import com.datacenter.utils.Connector;
 import com.datacenter.cache.GithubRepoCache;
 import com.datacenter.github.entity.GithubRepo;
 import com.datacenter.github.service.GithubRepoService;
