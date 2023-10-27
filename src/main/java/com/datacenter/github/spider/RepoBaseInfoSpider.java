@@ -17,11 +17,14 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class GithubSpider {
+public class RepoBaseInfoSpider {
     @Resource
     Connecter connecter;
     @Resource
@@ -62,7 +65,7 @@ public class GithubSpider {
     /**
      * 获取数据
      *
-     * @param githubRepo GithubRepo
+     * @param githubRepo GithubRepoCache
      * @return GithubRepoBaseInfo
      *
      * @throws IOException e
@@ -73,6 +76,8 @@ public class GithubSpider {
             return null;
         }
         Element body = doc.body();
+
+        String name = body.selectXpath("//*[@id=\"repository-container-header\"]/div[1]/div[1]/div[1]/strong/a").text();
         Elements applicationMain = body.select(".application-main");
         // 仓库容器头部数据
         Elements containerHeaderElements = applicationMain.select("#repository-container-header");
@@ -83,7 +88,7 @@ public class GithubSpider {
 
         return GithubRepoBaseInfo.builder()
                 .githubRepoId(githubRepo.getId())
-                .name(containerHeader.name())
+                .name(name)
                 .fork(containerHeader.fork())
                 .stars(containerHeader.stars())
                 .issues(containerHeader.issues())
@@ -91,7 +96,6 @@ public class GithubSpider {
                 .discussions(containerHeader.discussions())
                 .about(layoutSidebar.about())
                 .website(layoutSidebar.website())
-                .version(layoutSidebar.version())
                 .languagesJson(layoutSidebar.languagesJson())
                 .build();
     }
@@ -103,10 +107,6 @@ public class GithubSpider {
      * @return ContainerHeader
      */
     private ContainerHeader getContainerHeader(@Nonnull Elements repositoryContainerHeader) {
-        // 仓库名
-        String name = Objects.requireNonNull(repositoryContainerHeader
-                .attr("data-pjax", "#repo-content-pjax-container")
-                .select("a").first()).text();
         Elements counter = repositoryContainerHeader.select(".Counter");
         String fork = counter.select("#repo-network-counter").attr("title");
         String stars = counter.select("#repo-stars-counter-star").attr("title");
@@ -122,7 +122,7 @@ public class GithubSpider {
         issues = issues.isBlank() ? zeroStr : issues.replaceAll(",", "");
         pullRequests = pullRequests.isBlank() ? zeroStr : pullRequests.replaceAll(",", "");
         discussions = discussions.isBlank() ? zeroStr : discussions.replaceAll(",", "");
-        return new ContainerHeader(name, Integer.parseInt(fork),
+        return new ContainerHeader(Integer.parseInt(fork),
                 Integer.parseInt(stars),
                 Integer.parseInt(issues),
                 Integer.parseInt(pullRequests),
@@ -141,13 +141,12 @@ public class GithubSpider {
         String about = layoutSidebar.select("p").text();
         Elements attr = layoutSidebar.attr("class", "my-3 d-flex flex-items-center");
         String website = attr.select(".text-bold").get(0).attr("href");
-        String version = attr.select(".text-bold").get(1).text();
         List<String> languages = Optional.of(attr.select(".text-bold").select(".color-fg-default"))
                 .orElseGet(Elements::new)
                 .stream()
                 .map(Element::text).toList();
         String languagesJson = gson.toJson(languages);
-        return new LayoutSidebar(about, website, version, languagesJson);
+        return new LayoutSidebar(about, website, languagesJson);
     }
 
 }

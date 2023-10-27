@@ -76,11 +76,6 @@ public class GithubRepoBaseInfo implements Serializable {
     private String website;
 
     /**
-     * 最新版本
-     */
-    private String version;
-
-    /**
      * 开发语言
      */
     private String languagesJson;

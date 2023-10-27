@@ -15,7 +15,6 @@
             <result property="discussions" column="discussions" jdbcType="INTEGER"/>
             <result property="about" column="about" jdbcType="VARCHAR"/>
             <result property="website" column="website" jdbcType="VARCHAR"/>
-            <result property="version" column="version" jdbcType="VARCHAR"/>
             <result property="languagesJson" column="languages_json" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
@@ -25,7 +24,7 @@
         id,github_repo_id,name,
         fork,stars,issues,
         pull_requests,discussions,about,
-        website,version,languages_json,
+        website,languages_json,
         create_time,update_time
     </sql>
 </mapper>

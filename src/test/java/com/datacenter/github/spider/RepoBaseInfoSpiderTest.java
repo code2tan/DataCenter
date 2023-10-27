@@ -11,21 +11,21 @@ import java.util.Date;
 
 
 @SpringBootTest
-class GithubSpiderTest {
+class RepoBaseInfoSpiderTest {
     @Resource
-    GithubSpider githubSpider;
+    RepoBaseInfoSpider repoBaseInfoSpider;
 
     @Test
     void start() {
-        githubSpider.start();
+        repoBaseInfoSpider.start();
     }
 
     @Test
     void getData() {
-        String url = "https://github.com/Lymphatus/caesium-image-compressor";
+        String url = "https://github.com/apache/kafka";
         GithubRepo githubRepo = new GithubRepo(1, url, 1, new Date(), new Date(), 0);
         try {
-            GithubRepoBaseInfo data = githubSpider.getData(githubRepo);
+            GithubRepoBaseInfo data = repoBaseInfoSpider.getData(githubRepo);
             System.out.println(data);
         } catch (IOException e) {
             throw new RuntimeException(e);
