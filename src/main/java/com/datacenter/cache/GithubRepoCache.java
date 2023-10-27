@@ -16,12 +16,7 @@ import java.util.*;
 public class GithubRepoCache implements InitializingBean {
     @Resource
     GithubRepoService githubRepoService;
-    public Set<String> cache;
-
-
-    public GithubRepoCache() {
-        cache = new HashSet<>();
-    }
+    public Set<String> cache = new HashSet<>();
 
     @Override
     public void afterPropertiesSet() throws Exception {
