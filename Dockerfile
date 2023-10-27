@@ -1,6 +1,8 @@
 # 使用基于Debian的父镜像
 FROM openjdk:17-jdk-alpine
 LABEL build-name="datacenter"
+# 时区
+ENV TZ=Asia/Shanghai
 # 设置工作目录
 WORKDIR /app
 

@@ -5,6 +5,8 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  session:
+    timeout: 10000
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: xx
