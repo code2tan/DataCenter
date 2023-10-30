@@ -127,7 +127,7 @@ public class RepoBaseInfoSpiderTask implements Callable<GithubRepoBaseInfo> {
     private LayoutSidebar getLayoutSidebar(Elements layoutSidebar) {
         String about = layoutSidebar.select("p").text();
         Elements attr = layoutSidebar.attr("class", "my-3 d-flex flex-items-center");
-        String website = attr.select(".text-bold").get(0).attr("href");
+        String website = attr.select(".text-bold").select("a").attr("href");
         List<String> languages = Optional.of(attr.select(".text-bold").select(".color-fg-default"))
                 .orElseGet(Elements::new)
                 .stream()
