@@ -39,4 +39,12 @@ public class GithubRepoCache implements InitializingBean {
                 .filter(url -> !cache.contains(url))
                 .toList());
     }
+
+    public boolean addData(List<String> data) {
+        return cache.addAll(data);
+    }
+
+    public boolean addData(String data) {
+        return cache.add(data);
+    }
 }

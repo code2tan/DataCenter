@@ -45,7 +45,8 @@ public class RepoTrendingSpider {
         for (Element element : repoList) {
             String suffix = element.getElementsByTag("h2").select("a").attr("href");
             String allUrl = "https://github.com" + suffix;
-            if (githubRepoCache.cache.add(allUrl)) {
+            // 更新缓存
+            if (githubRepoCache.addData(allUrl)) {
                 GithubRepo githubRepo = new GithubRepo();
                 githubRepo.setUrl(allUrl);
                 repoTrendingList.add(githubRepo);
