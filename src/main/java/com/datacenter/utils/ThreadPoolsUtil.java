@@ -34,14 +34,14 @@ public class ThreadPoolsUtil {
      * @param poolSize 池大小
      * @return ExecutorService 线程池服务
      */
-    private static ExecutorService init(String poolName, int poolSize) {
+    private static ExecutorService init(String poolName, int poolSize, BlockingQueue<Runnable> queue) {
         final int poolSizeDealt = poolSize < DEFAULT_POOL_SIZE ? DEFAULT_POOL_SIZE : poolSize;
         // poolSizeDealt * 1.25
         int maxPoolSizeDealt = poolSizeDealt + (poolSizeDealt >> 2);
 
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(poolSizeDealt, maxPoolSizeDealt,
                 1L, TimeUnit.SECONDS,
-                new SynchronousQueue<>(),
+                queue,
                 new ThreadFactoryBuilder().setNameFormat("Pool-" + poolName).setDaemon(false).build(),
                 new ThreadPoolExecutor.CallerRunsPolicy());
 
@@ -76,9 +76,12 @@ public class ThreadPoolsUtil {
      * @return ExecutorService
      */
     public static ExecutorService getOrInitExecutors(String poolName, int poolSize) {
-        return EXECUTORS.computeIfAbsent(poolName, key -> init(key, poolSize));
+        return EXECUTORS.computeIfAbsent(poolName, key -> init(key, poolSize, new LinkedBlockingQueue<>(2 << 15)));
     }
 
+    public static ExecutorService getOrInitExecutors(String poolName, int poolSize, BlockingQueue<Runnable> queue) {
+        return EXECUTORS.computeIfAbsent(poolName, key -> init(key, poolSize, queue));
+    }
 
     /**
      * 释放线程资源
