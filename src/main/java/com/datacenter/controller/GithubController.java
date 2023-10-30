@@ -35,7 +35,7 @@ public class GithubController {
         return String.format("flushed by %s", param);
     }
 
-    @GetMapping("/repo")
+    @PostMapping("/repo")
     public String flushRepoBaseInfoByHand(@RequestParam String param) {
         if (Objects.equals(param, sugar)) {
             log.info(String.format("[%s] flush repo base info by hand ===> start ", param));
