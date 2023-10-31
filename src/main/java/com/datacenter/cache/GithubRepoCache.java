@@ -19,7 +19,7 @@ public class GithubRepoCache implements InitializingBean {
     public Set<String> cache = new HashSet<>();
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         IPage<GithubRepo> page = new Page<>(1, 50);
         loadData(page);
         for (long i = 2; i <= page.getPages(); i++) {
