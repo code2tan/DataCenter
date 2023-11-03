@@ -25,7 +25,7 @@ public class ToutiaoController {
     }
 
     @PostMapping("/top/list")
-    public String flushTrendingByHand(@RequestParam String param) {
+    public String flushTopList(@RequestParam String param) {
         if (Objects.equals(param, sugar)) {
             log.info(String.format("[%s] flush by hand ===> start ", param));
             toutiaoTopListSpider.start();
