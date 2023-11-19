@@ -7,10 +7,9 @@ import java.util.Map;
 import java.util.concurrent.*;
 
 /**
- * @author 44295 谭帮华 <a href="mailto:banghua.tan@1hai.cn">Contact me.</a>
- * @version 1.0
- * date 2022/10/09 13:56
- * desc : 线程池工具类
+ * @author code2tan
+ * Date: [2023/11/19 21:25]
+ * Description: 线程池工具类
  */
 @Slf4j
 public class ThreadPoolsUtil {
